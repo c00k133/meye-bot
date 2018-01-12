@@ -38,5 +38,8 @@ class Bot:
             reply_markup=reply_markup
         )
 
+    def run(self):
+        self.updater.start_polling()
+
     def __str__(self):
         return "I'm {}, I'll look after you!".format(self.name if self.name else "a bot")
