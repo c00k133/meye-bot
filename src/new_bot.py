@@ -22,4 +22,14 @@ def wait_for_internet():
 
 if __name__ == "__main__":
     token_file_path = os.path.join(DIR, '../token.json')
+    try:
+        with open(token_file_path) as file_o:
+            secrets = json.load(file_o)
+    except IOError:
+        print("Could not find {}.".format(token_file_path)
+        sys.exit(1)
+    if 'token' not in secrets:
+        print("E: no 'token' in {}".format(token_file_path))
+        sys.exit(1)
+    if 
 
