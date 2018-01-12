@@ -35,8 +35,8 @@ if __name__ == "__main__":
         print("E: no 'admins' in {}".format(token_file_path))
         sys.exit(1)
 
-    for admin in secrets['auth_check']:
-        restrictions.LIST_OF_ADMINS.append(admin['id'])
+#    for admin in secrets['auth_check']:
+#        restrictions.LIST_OF_ADMINS.append(admin['id'])
 
     wait_for_internet()
 

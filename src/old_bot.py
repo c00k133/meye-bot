@@ -28,7 +28,7 @@ def image(bot, update):
 
 def main():
 
-    filepath = "../../token.json.json"
+    filepath = "../token.json"
 
     try:
         with open(filepath) as file_o:
@@ -37,7 +37,7 @@ def main():
         print("Could not find {}.".format(filepath))
 
         
-    token      = secrets["token.json"]
+    token      = secrets["token"]
     updater    = Updater(token=token)
     dispatcher = updater.dispatcher
 

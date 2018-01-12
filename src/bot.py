@@ -2,6 +2,7 @@
 
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import Updater, CommandHandler
+from datetime import timedelta
 import restrictions
 import os, sys, shutil
 
@@ -14,16 +15,24 @@ class Bot:
 
         self.updater    = Updater(token=token)
         self.dispatcher = self.updater.dispatcher
-        self.dispatcher.add_handler(CommandHandler('start', self.start))
 
-    @restrictions.restricted
+        start_handler = CommandHandler('start', self.start)
+        self.dispatcher.add_handler(start_handler)
+
+        cameras_handler = CommandHandler('cameras', self.cameras)
+        self.dispatcher.add_handler(cameras_handler)
+
+        uptime_handler = CommandHandler('uptime', self.uptime)
+        self.dispatcher.add_handler(uptime_handler)
+
+#    @restrictions.restricted
     def start(self, bot, update):
         bot.send_message(
             chat_id=update.message.chat_id,
             text=self
         )
 
-    @restrictions.restricted
+#    @restrictions.restricted
     def cameras(self, bot, update):
         row = True
         camera_keyboard = [[]]
@@ -36,6 +45,16 @@ class Bot:
             chat_id=update.message.chat_id,
             text="Cameras",
             reply_markup=reply_markup
+        )
+
+#    @restrictions.restricted
+    def uptime(self, bot, update):
+        with open('/proc/uptime', 'r') as f:
+            uptime_seconds = float(f.readLines().split()[0])
+            uptime_string  = str(timedelta(seconds - uptime_seconds))
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text="My uptime has been:\n" + uptime_string
         )
 
     def run(self):
