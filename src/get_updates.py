@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import json, requests, datetime, os
 
 token    = json.load(open("../../token.json.json"))["token.json"]

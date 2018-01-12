@@ -1,4 +1,4 @@
-#!/usr/bin/env pytho3.6
+#!/usr/bin/env python3.6
 
 from urllib.request import urlopen, URLError
 import json, sys, os, time
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     except IOError:
         print("Could not find {}.".format(token_file_path))
         sys.exit(1)
-    if 'token.json' not in secrets:
+    if 'token' not in secrets:
         print("E: no 'token.json' in {}".format(token_file_path))
         sys.exit(1)
     if "auth_check" not in secrets:

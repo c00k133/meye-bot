@@ -1,3 +1,5 @@
+#!/urs/bin/env
+
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import Updater, CommandHandler
 import restrictions
