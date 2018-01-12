@@ -6,14 +6,14 @@ import json, restrictions, sys, os
 
 @restrictions.restricted
 def start(bot, update):
-    bot.sendMessage(
+    bot.send_message(
         chat_id=update.message.chat_id,
         text="I'm a bot, please talk to me!"
     )
 
 @restrictions.restricted
 def test(bot, update):
-    bot.sendMessage(
+    bot.send_message(
         chat_id=update.message.chat_id,
         text="Testing"
     )
@@ -36,7 +36,9 @@ def main():
     except IOError:
         print("Could not find {}.".format(filepath))
 
-        
+    for admin in secrets['auth_check']:
+        restrictions.LIST_OF_ADMINS.append(admin['id'])
+
     token      = secrets["token"]
     updater    = Updater(token=token)
     dispatcher = updater.dispatcher

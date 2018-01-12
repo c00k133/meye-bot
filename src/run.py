@@ -31,12 +31,12 @@ if __name__ == "__main__":
     if 'token' not in secrets:
         print("E: no 'token.json' in {}".format(token_file_path))
         sys.exit(1)
-    if "auth_check" not in secrets:
+    if 'auth_check' not in secrets:
         print("E: no 'admins' in {}".format(token_file_path))
         sys.exit(1)
 
-#    for admin in secrets['auth_check']:
-#        restrictions.LIST_OF_ADMINS.append(admin['id'])
+    for admin in secrets['auth_check']:
+       restrictions.LIST_OF_ADMINS.append(admin['id'])
 
     wait_for_internet()
 

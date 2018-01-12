@@ -1,9 +1,9 @@
 from functools import wraps
 import json
 
-secrets = json.load(open("../token.json"))
-LIST_OF_ADMINS = list(map(lambda s: s["id"], secrets["auth_check"]))
-#LIST_OF_ADMINS = []
+# secrets = json.load(open("../token.json"))
+# LIST_OF_ADMINS = list(map(lambda s: s["id"], secrets["auth_check"]))
+LIST_OF_ADMINS = []
 
 def restricted(func):
     @wraps(func)

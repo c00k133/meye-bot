@@ -4,7 +4,7 @@ from telegram import ReplyKeyboardMarkup
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 import restrictions
-import os, sys, shutil
+import os
 
 CAM_DIR = '/var/lib/motioneye/'
 
@@ -25,14 +25,17 @@ class Bot:
         uptime_handler = CommandHandler('uptime', self.uptime)
         self.dispatcher.add_handler(uptime_handler)
 
-#    @restrictions.restricted
+        print("hi")
+        print(restrictions.LIST_OF_ADMINS)
+
+    # @restrictions.restricted
     def start(self, bot, update):
         bot.send_message(
             chat_id=update.message.chat_id,
-            text=self
+            text=self.__str__()
         )
 
-#    @restrictions.restricted
+    # @restrictions.restricted
     def cameras(self, bot, update):
         row = True
         camera_keyboard = [[]]
@@ -47,11 +50,11 @@ class Bot:
             reply_markup=reply_markup
         )
 
-#    @restrictions.restricted
+    # @restrictions.restricted
     def uptime(self, bot, update):
         with open('/proc/uptime', 'r') as f:
-            uptime_seconds = float(f.readLines().split()[0])
-            uptime_string  = str(timedelta(seconds - uptime_seconds))
+            uptime_seconds = float(f.readlines().split()[0])
+            uptime_string  = str(timedelta(seconds=uptime_seconds))
         bot.send_message(
             chat_id=update.message.chat_id,
             text="My uptime has been:\n" + uptime_string
