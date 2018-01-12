@@ -2,7 +2,7 @@
 
 import json, requests, datetime, os
 
-token    = json.load(open("../../token.json"))["token"]
+token    = json.load(open("../../token.json.json"))["token.json"]
 filename = 'update-' + str(datetime.datetime.now())
 filepath = 'updates/' + filename
 

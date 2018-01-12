@@ -1,9 +1,9 @@
 #!/usr/bin/env pytho3.6
 
-from telegram.ext import Updater, CommandHelper
 from urllib.request import urlopen, URLError
-import json, restrictions, sys, os, time
-import bot
+import json, sys, os, time
+import restrictions
+from bot import Bot
 
 DIR = os.path.dirname(__file__)
 
@@ -26,10 +26,21 @@ if __name__ == "__main__":
         with open(token_file_path) as file_o:
             secrets = json.load(file_o)
     except IOError:
-        print("Could not find {}.".format(token_file_path)
+        print("Could not find {}.".format(token_file_path))
         sys.exit(1)
-    if 'token' not in secrets:
-        print("E: no 'token' in {}".format(token_file_path))
+    if 'token.json' not in secrets:
+        print("E: no 'token.json' in {}".format(token_file_path))
         sys.exit(1)
-    if 
+    if "auth_check" not in secrets:
+        print("E: no 'admins' in {}".format(token_file_path))
+        sys.exit(1)
+
+    for admin in secrets['auth_check']:
+        restrictions.LIST_OF_ADMINS.append(admin['id'])
+
+    wait_for_internet()
+
+    a = Bot(secrets['token'])
+    a.run()
+    print('Bot started')
 

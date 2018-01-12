@@ -28,16 +28,16 @@ def image(bot, update):
 
 def main():
 
-    filepath = "../../token.json"
+    filepath = "../../token.json.json"
 
     try:
         with open(filepath) as file_o:
             secrets = json.load(file_o)
-    except IOErrors:
+    except IOError:
         print("Could not find {}.".format(filepath))
 
         
-    token      = secrets["token"]
+    token      = secrets["token.json"]
     updater    = Updater(token=token)
     dispatcher = updater.dispatcher
 
