@@ -1,12 +1,24 @@
 #!/urs/bin/env
 
 from telegram import ReplyKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
-import restrictions
+from functools import wraps
 import os
 
 CAM_DIR = '/var/lib/motioneye/'
+LIST_OF_ADMINS = []
+
+def restrict(func):
+    @wraps(func)
+    def wrapped(self, bot, update, *args, **kwargs):
+        user_id = update.effective_user.id
+        if user_id not in LIST_OF_ADMINS:
+            print('Unathorized access denied for {}.'.format(user_id))
+            return
+        return func(self, bot, update, *args, **kwargs)
+    return wrapped
 
 class Bot:
 
@@ -16,8 +28,14 @@ class Bot:
         self.updater    = Updater(token=token)
         self.dispatcher = self.updater.dispatcher
 
+        # Start handlers
+        ##########################################################
+
         start_handler = CommandHandler('start', self.start)
         self.dispatcher.add_handler(start_handler)
+
+        test_handler = CommandHandler('test', self.test)
+        self.dispatcher.add_handler(test_handler)
 
         cameras_handler = CommandHandler('cameras', self.cameras)
         self.dispatcher.add_handler(cameras_handler)
@@ -25,18 +43,43 @@ class Bot:
         uptime_handler = CommandHandler('uptime', self.uptime)
         self.dispatcher.add_handler(uptime_handler)
 
-        print("hi")
-        print(restrictions.LIST_OF_ADMINS)
+        # End handlers
+        ##########################################################
 
-    # @restrictions.restricted
+    @restrict
     def start(self, bot, update):
         bot.send_message(
             chat_id=update.message.chat_id,
             text=self.__str__()
         )
 
-    # @restrictions.restricted
+    @restrict
+    def test(self, bot, update):
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text="testing"
+        )
+
+    def build_menu(self, buttons, n_cols, header_buttons=None, footer_buttons=None):
+        menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
+        if header_buttons:
+            menu.insert(0, header_buttons)
+        if footer_buttons:
+            menu.append(footer_buttons)
+        return menu
+
+    @restrict
     def cameras(self, bot, update):
+        cams = os.listdir(CAM_DIR)
+        button_list = [KeyboardButton(cam) for cam in cams]
+        reply_markup = InlineKeyboardMarkup(self.build_menu(button_list, n_cols=len(cams) % 3))
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text='Cameras',
+            reply_markup=reply_markup
+        )
+
+        """
         row = True
         camera_keyboard = [[]]
         for cam in os.listdir(CAM_DIR):
@@ -49,15 +92,16 @@ class Bot:
             text="Cameras",
             reply_markup=reply_markup
         )
+        """
 
-    # @restrictions.restricted
+    @restrict
     def uptime(self, bot, update):
         with open('/proc/uptime', 'r') as f:
-            uptime_seconds = float(f.readlines().split()[0])
-            uptime_string  = str(timedelta(seconds=uptime_seconds))
+            uptime_seconds = float(f.readline().split()[0])
+            uptime_string = str(timedelta(seconds=uptime_seconds))
         bot.send_message(
             chat_id=update.message.chat_id,
-            text="My uptime has been:\n" + uptime_string
+            text='My uptime has been:\n' + uptime_string
         )
 
     def run(self):

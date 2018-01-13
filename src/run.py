@@ -2,8 +2,7 @@
 
 from urllib.request import urlopen, URLError
 import json, sys, os, time
-import restrictions
-from bot import Bot
+import bot
 
 DIR = os.path.dirname(__file__)
 
@@ -34,13 +33,15 @@ if __name__ == "__main__":
     if 'auth_check' not in secrets:
         print("E: no 'admins' in {}".format(token_file_path))
         sys.exit(1)
+    if 'name' in secrets:
+        name = secrets['name']
 
     for admin in secrets['auth_check']:
-       restrictions.LIST_OF_ADMINS.append(admin['id'])
+       bot.LIST_OF_ADMINS.append(admin['id'])
 
     wait_for_internet()
 
-    a = Bot(secrets['token'])
+    a = bot.Bot(secrets['token'], name=name)
     a.run()
     print('Bot started')
 
