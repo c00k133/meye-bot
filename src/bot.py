@@ -5,7 +5,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 from functools import wraps
-import os
+import os, telegram
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_ADMINS = []
@@ -60,7 +60,8 @@ class Bot:
             text="testing"
         )
 
-    def build_menu(self, buttons, n_cols, header_buttons=None, footer_buttons=None):
+    @staticmethod
+    def build_menu(buttons, n_cols, header_buttons=None, footer_buttons=None):
         menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
         if header_buttons:
             menu.insert(0, header_buttons)
@@ -72,7 +73,7 @@ class Bot:
     def cameras(self, bot, update):
         cams = os.listdir(CAM_DIR)
         button_list = [KeyboardButton(cam) for cam in cams]
-        reply_markup = InlineKeyboardMarkup(self.build_menu(button_list, n_cols=len(cams) % 3))
+        reply_markup = InlineKeyboardMarkup(self.build_menu(buttons=button_list, n_cols=len(cams) % 3))
         bot.send_message(
             chat_id=update.message.chat_id,
             text='Cameras',
@@ -101,11 +102,17 @@ class Bot:
             uptime_string = str(timedelta(seconds=uptime_seconds))
         bot.send_message(
             chat_id=update.message.chat_id,
-            text='My uptime has been:\n' + uptime_string
+            text='My uptime has been:\n' + '<b>{}</b>'.format(uptime_string),
+            parse_mode=telegram.ParseMode.HTML
         )
 
     def run(self):
         self.updater.start_polling()
+        self.updater.idle()
+
+    def stop(self):
+        print('Stopping the bot...')
+        self.updater.stop()
 
     def __str__(self):
         return "I'm {}, I'll look after you!".format(self.name if self.name else "a bot")

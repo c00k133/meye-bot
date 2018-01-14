@@ -42,6 +42,16 @@ if __name__ == "__main__":
     wait_for_internet()
 
     a = bot.Bot(secrets['token'], name=name)
-    a.run()
-    print('Bot started')
+    try:
+        print('Starting bot')
+        a.run()
+    except KeyboardInterrupt:
+        print('W: interrupt received, stopping...')
+    finally:
+        print("here")
+        a.stop()
+        # try:
+        #     sys.exit(0)
+        # except SystemExit:
+        #     os._exit(0)
 
