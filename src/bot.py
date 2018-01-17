@@ -25,6 +25,7 @@ class Bot:
     def __init__(self, token, name=None):
         self.name  = name
 
+        self.bot        = telegram.Bot(token)
         self.updater    = Updater(token=token)
         self.dispatcher = self.updater.dispatcher
 
@@ -107,7 +108,7 @@ class Bot:
         )
 
     def test_listen(self):
-        bot.send_message(
+        self.bot.send_message(
             chat_id=234005157,
             text='Testing'
         )

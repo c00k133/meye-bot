@@ -20,7 +20,6 @@ def wait_for_internet():
 
 def parse(data, a):
     a.test_listen()
-    print(data)
 
 def listen(a):
     print("Started listening")
