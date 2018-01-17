@@ -108,7 +108,6 @@ class Bot:
 
     def run(self):
         self.updater.start_polling()
-        self.updater.idle()
 
     def stop(self):
         print('Stopping the bot...')

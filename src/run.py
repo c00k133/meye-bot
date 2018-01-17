@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.6
 
 from urllib.request import urlopen, URLError
-import json, sys, os, time
+import json, sys, os, time, socket
 import bot
 
 DIR = os.path.dirname(__file__)
@@ -17,6 +17,21 @@ def wait_for_internet():
     while not check_connectivity('https://api.telegram.org'):
         print('Waiting for internet')
         time.sleep(1)
+
+def parse(data):
+    print(data)
+
+def listen():
+    print("Started listening")
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('localhost', 9988)) # TODO: change this so that it works on home wifi
+    s.listen(1)
+
+    while True:
+        conn, addr = s.accept()
+        data = conn.recv(1024)
+        conn.close()
+        parse(data)
         
 
 if __name__ == "__main__":
@@ -33,6 +48,7 @@ if __name__ == "__main__":
     if 'auth_check' not in secrets:
         print("E: no 'admins' in {}".format(token_file_path))
         sys.exit(1)
+    name = None
     if 'name' in secrets:
         name = secrets['name']
 
@@ -45,13 +61,8 @@ if __name__ == "__main__":
     try:
         print('Starting bot')
         a.run()
+        listen()
     except KeyboardInterrupt:
-        print('W: interrupt received, stopping...')
-    finally:
-        print("here")
+        print('W: interrupt received, stopping... (this might take some seconds)')
         a.stop()
-        # try:
-        #     sys.exit(0)
-        # except SystemExit:
-        #     os._exit(0)
 
