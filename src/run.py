@@ -18,10 +18,11 @@ def wait_for_internet():
         print('Waiting for internet')
         time.sleep(1)
 
-def parse(data):
+def parse(data, a):
+    a.test_listen()
     print(data)
 
-def listen():
+def listen(a):
     print("Started listening")
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('localhost', 9988)) # TODO: change this so that it works on home wifi
@@ -31,7 +32,7 @@ def listen():
         conn, addr = s.accept()
         data = conn.recv(1024)
         conn.close()
-        parse(data)
+        parse(data, a)
         
 
 if __name__ == "__main__":
@@ -61,7 +62,7 @@ if __name__ == "__main__":
     try:
         print('Starting bot')
         a.run()
-        listen()
+        listen(a)
     except KeyboardInterrupt:
         print('W: interrupt received, stopping... (this might take some seconds)')
         a.stop()

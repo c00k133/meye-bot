@@ -106,6 +106,12 @@ class Bot:
             parse_mode=telegram.ParseMode.HTML
         )
 
+    def test_listen(self):
+        bot.send_message(
+            chat_id=234005157,
+            text='Testing'
+        )
+
     def run(self):
         self.updater.start_polling()
 
