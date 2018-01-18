@@ -20,7 +20,7 @@ def wait_for_internet():
 
 def save_pid():
     pid = str(os.getpid())
-    with open('bot-pid', 'w+') as pid_f:
+    with open('pid-bot', 'w+') as pid_f:
         pid_f.write(pid)
 
 def parse(data, a):

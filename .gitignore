@@ -1,6 +1,6 @@
 **/.idea/**
 token.json
-src/bot-pid
+src/pid-bot
 src/nohup.out
 
 # Byte-compiled / optimized / DLL files
