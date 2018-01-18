@@ -10,15 +10,24 @@ git push
 pi_ip=$(cat pi_ip | grep 192)
 id_rsa=$(cat pi_ip | grep .ssh)
 tbot=$(cat pi_ip | grep tbot)
-query="cd ${tbot} && git pull"
 
 # Query function for the RPi
 do_query() {
     ssh -i ${id_rsa} pi@${pi_ip} $1 
 }
 
+# Create the query
+query=(
+    "cd ${tbot} && git pull "    # Pull changes on RPi
+    "cat src/pid-bot| kill -l "  # Stop (kill) last bot instance
+    "cd src && nohup ./run.py "  # Start a new bot instance
+)
+
+# Do the actual query
+do_query "${query[*]}"
+
+#: << 'END'
 # Pull changes on RPi
-#ssh -i ${id_rsa} pi@${pi_ip} ${query}
 do_query "cd ${tbot} && git pull"
 
 # Report if success or not
@@ -31,4 +40,5 @@ fi
 # Restart the bot
 do_query "cat ${tbot}/src/pid-bot | kill -l"
 do_query "cd ${tbot}/src && nohup ./run.py &!"
+#END
 
