@@ -1,6 +1,7 @@
 **/.idea/**
 token.json
 src/bot-pid
+**/nohup/**
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
