@@ -24,7 +24,7 @@ def save_pid():
         pid_f.write(pid)
 
 def parse(data, a):
-    a.test_listen(data)
+    a.test_listen(data.decode('utf-8'))
 
 def listen(a):
     print("Started listening")
