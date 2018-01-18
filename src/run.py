@@ -18,8 +18,13 @@ def wait_for_internet():
         print('Waiting for internet')
         time.sleep(1)
 
+def save_pid():
+    pid = str(os.getpid())
+    with open('bot-pid', 'w+') as pid_f:
+        pid_f.write(pid)
+
 def parse(data, a):
-    a.test_listen()
+    a.test_listen(data)
 
 def listen(a):
     print("Started listening")
@@ -35,6 +40,8 @@ def listen(a):
         
 
 if __name__ == "__main__":
+    save_pid()
+
     token_file_path = os.path.join(DIR, '../token.json')
     try:
         with open(token_file_path) as file_o:

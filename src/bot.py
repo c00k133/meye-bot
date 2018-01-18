@@ -107,10 +107,10 @@ class Bot:
             parse_mode=telegram.ParseMode.HTML
         )
 
-    def test_listen(self):
+    def test_listen(self, msg='Testing'):
         self.bot.send_message(
             chat_id=234005157,
-            text='Testing'
+            text=msg
         )
 
     def run(self):
