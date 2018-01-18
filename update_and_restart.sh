@@ -26,19 +26,3 @@ query=(
 # Do the actual query
 do_query "${query[*]}"
 
-#: << 'END'
-# Pull changes on RPi
-do_query "cd ${tbot} && git pull"
-
-# Report if success or not
-if [[ $? -eq 0 ]]; then
-    echo "Success"
-else
-    echo "Failed"
-fi
-
-# Restart the bot
-do_query "cat ${tbot}/src/pid-bot | kill -l"
-do_query "cd ${tbot}/src && nohup ./run.py &!"
-#END
-
