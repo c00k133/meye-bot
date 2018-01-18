@@ -14,7 +14,7 @@ query="cd ${tbot} && git pull"
 
 # Query function for the RPi
 do_query() {
-    ssh -i ${id_rsa} pi@${pi_ip} $1 &
+    ssh -i ${id_rsa} pi@${pi_ip} $1 
 }
 
 # Pull changes on RPi
