@@ -18,9 +18,9 @@ do_query() {
 
 # Create the query
 query=(
-    "cd ${tbot} && git pull "    # Pull changes on RPi
-    "cat src/pid-bot| kill -l "  # Stop (kill) last bot instance
-    "cd src && nohup ./run.py "  # Start a new bot instance
+    "cd ${tbot} && git pull && "    # Pull changes on RPi
+    "cat src/pid-bot| kill -l && "  # Stop (kill) last bot instance
+    "cd src && nohup ./run.py &!"   # Start a new bot instance
 )
 
 # Do the actual query
