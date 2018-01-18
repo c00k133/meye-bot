@@ -28,5 +28,7 @@ else
     echo "Failed"
 fi
 
-
+# Restart the bot
+do_query "cat ${tbot}/src/pid-bot | kill -l"
+do_query "cd ${tbot}/src && nohup ./run.py &!"
 
