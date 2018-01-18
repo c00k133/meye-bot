@@ -1,5 +1,6 @@
 **/.idea/**
 token.json
+src/bot-pid
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
