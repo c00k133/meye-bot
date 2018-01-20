@@ -108,14 +108,17 @@ class Bot:
         )
 
     def test_listen(self, msg='Testing'):
-        self.bot.send_message(
-            chat_id=234005157,
-            text=msg
-        )
-        self.bot.send_photo(
-            chat_id=234005157,
-            photo=open('14-39-13.mp4.thumb', 'rb')
-        )
+        filepath = CAM_DIR + 'Camera1'  # TODO: Change this so that additional cameras can be added
+        newest_dir = sorted(list(os.listdir(filepath)))[-1]
+        newest_file = sorted(list(os.listdir(newest_dir)))
+        thumbs = [p for p in newest_file if '.thumb' in p]
+        photo = sorted(list(thumbs))[-1]
+        with open(photo, 'rb') as p:
+            self.bot.send_photo(
+                chat_id=234005157,
+                photo=p,
+                caption=msg
+            )
 
     def run(self):
         self.updater.start_polling()
