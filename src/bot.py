@@ -112,6 +112,10 @@ class Bot:
             chat_id=234005157,
             text=msg
         )
+        self.bot.send_photo(
+            chat_id=234005157,
+            photo=open('14-39-13.mp4.thumb', 'rb')
+        )
 
     def run(self):
         self.updater.start_polling()
