@@ -108,12 +108,12 @@ class Bot:
         )
 
     def test_listen(self, msg='Testing'):
-        filepath = CAM_DIR + 'Camera1'  # TODO: Change this so that additional cameras can be added
-        newest_dir = sorted(list(os.listdir(filepath)))[-1]
+        filepath    = CAM_DIR + 'Camera1'  # TODO: Change this so that additional cameras can be added
+        newest_dir  = sorted(list(os.listdir(filepath)))[-1]
         actual_path = filepath + '/' +  newest_dir
         newest_file = sorted(list(os.listdir(actual_path)))
-        thumbs = [p for p in newest_file if '.thumb' in p]
-        photo = sorted(list(thumbs))[-1]
+        thumbs      = [p for p in newest_file if '.thumb' in p]
+        photo       = sorted(list(thumbs))[-1]
         with open(actual_path + '/' + photo, 'rb') as p:
             self.bot.send_photo(
                 chat_id=234005157,
