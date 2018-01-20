@@ -9,6 +9,7 @@ import os, telegram
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_ADMINS = []
+TEST_USERS = []
 
 def restrict(func):
     @wraps(func)
@@ -112,14 +113,35 @@ class Bot:
         newest_dir  = sorted(list(os.listdir(filepath)))[-1]
         actual_path = filepath + '/' +  newest_dir
         newest_file = sorted(list(os.listdir(actual_path)))
+        the_file    = newest_file[-1]
+
+        with open(actual_path + '/' + the_file, 'rb') as f:
+            if '.thumb' in the_file:
+                for user in TEST_USERS:
+                    self.bot.send_photo(
+                        chat_id=user,
+                        photo=f,
+                        caption=msg
+                    )
+            else:
+                for user in TEST_USERS:
+                    self.bot.send_video(
+                        chat_id=user,
+                        video=f,
+                        caption=msg
+                    )
+
+        """
         thumbs      = [p for p in newest_file if '.thumb' in p]
         photo       = sorted(list(thumbs))[-1]
         with open(actual_path + '/' + photo, 'rb') as p:
-            self.bot.send_photo(
-                chat_id=234005157,
-                photo=p,
-                caption=msg
-            )
+            for user in TEST_USERS:
+                self.bot.send_photo(
+                    chat_id=user,
+                    photo=p,
+                    caption=msg
+                )
+        """
 
     def run(self):
         self.updater.start_polling()
