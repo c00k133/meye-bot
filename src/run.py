@@ -60,9 +60,9 @@ if __name__ == "__main__":
         name = secrets['name']
 
     for admin in secrets['auth_check']:
-       bot.LIST_OF_ADMINS.append(admin['id'])
+       bot.LIST_OF_USERS.append(admin['id'])
     for user in secrets['auth_check']:
-        if user['username'] == 'cooksterino':
+        if user['admin']:
             bot.TEST_USERS.append(user['id'])
 
     wait_for_internet()

@@ -8,14 +8,14 @@ from functools import wraps
 import os, telegram
 
 CAM_DIR = '/var/lib/motioneye/'
-LIST_OF_ADMINS = []
+LIST_OF_USERS = []
 TEST_USERS = []
 
 def restrict(func):
     @wraps(func)
     def wrapped(self, bot, update, *args, **kwargs):
         user_id = update.effective_user.id
-        if user_id not in LIST_OF_ADMINS:
+        if user_id not in LIST_OF_USERS:
             print('Unathorized access denied for {}.'.format(user_id))
             return
         return func(self, bot, update, *args, **kwargs)
