@@ -108,7 +108,7 @@ class Bot:
             parse_mode=telegram.ParseMode.HTML
         )
 
-    def test_listen(self, msg='Testing'):
+    def test_listen(self, msg='Received a message!'):
         filepath    = CAM_DIR + 'Camera1'  # TODO: Change this so that additional cameras can be added
         newest_dir  = sorted(list(os.listdir(filepath)))[-1]
         actual_path = filepath + '/' +  newest_dir

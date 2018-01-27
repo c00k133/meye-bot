@@ -30,7 +30,7 @@ def listen(a):
     print("Started listening")
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('localhost', 9988)) # TODO: change this so that it works on home wifi
-    s.listen(1)
+    s.listen(1)                 # maybe not, as messages will be sent locallyj
 
     while True:
         conn, addr = s.accept()
