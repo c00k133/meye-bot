@@ -1,4 +1,0 @@
-
-You could use IFTTT on Android to ensure that the phone is connected to the home Wifi when at home.
-Research also if it IFTTT can execute commands.
-
