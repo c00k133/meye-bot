@@ -7,9 +7,10 @@ git commit -m "Script - ${timestamp}"
 git push
 
 # Create variables for SSH
-pi_ip=$(cat pi_ip | grep 192)
+pi_ip=$(cat pi_ip | grep "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*")
 id_rsa=$(cat pi_ip | grep .ssh)
 tbot=$(cat pi_ip | grep tbot)
+
 
 # Query function for the RPi
 do_query() {
