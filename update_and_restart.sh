@@ -25,5 +25,5 @@ query=(
 )
 
 # Do the actual query
-do_query "${query[*]}"
+do_query "${query[*]}" &
 
