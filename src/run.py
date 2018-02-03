@@ -57,8 +57,9 @@ if __name__ == "__main__":
         sys.exit(1)
     name = None
     if 'name' in secrets:
-        print('Found name')
         name = secrets['name']
+    else:
+        print('Found no name')
 
     for user in secrets['auth_check']:
         bot.LIST_OF_USERS.append(user['id'])
