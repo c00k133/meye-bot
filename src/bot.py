@@ -138,10 +138,13 @@ class Bot:
             return online
 
         if update.effective_user.id in TEST_USERS:
+            self.bot.send_message(
+                chat_id=update.message.chat_id,
+                text='Started scanning'
+            )
             start = time.time()
             now_online = get_macs()
             end = time.time()
-            text = 'Placeholder'  # Adding this as for some reason I'm getting sent None
             if len(now_online) == 0:
                 text = 'Found none ({}s)'.format(int(end - start))
             else:
