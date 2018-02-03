@@ -126,12 +126,12 @@ class Bot:
             nm.scan(hosts='192.168.1.0/24', arguments='-e wlan0 -sP')
             host_list = nm.all_hosts()
 #            for host
-        if update.effective_user.id in TEST_USERS:
-            self.bot.send_message(
-                chat_id=update.effective_user,
-                text=str(LIST_OF_USERS) + '\n' + str(TEST_USERS)
-                #"Testing at_home"
-            )
+#        if update.effective_user.id in TEST_USERS:
+        self.bot.send_message(
+            chat_id=update.effective_user,
+            text=str(LIST_OF_USERS) + '\n' + str(TEST_USERS)
+            #"Testing at_home"
+        )
 
     def run(self):
         self.updater.start_polling()
