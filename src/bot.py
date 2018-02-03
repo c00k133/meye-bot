@@ -10,6 +10,7 @@ import os, telegram, nmap
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
 TEST_USERS = []
+MAC_ADDRESSES = {}
 
 def restrict(func):
     @wraps(func)
@@ -125,11 +126,24 @@ class Bot:
             nm = nmap.PortScanner()
             nm.scan(hosts='192.168.1.0/24', arguments='-e wlan0 -sP')
             host_list = nm.all_hosts()
-#            for host
+            ls = []
+            for host in host_list:
+                temp = nm[host]['addresses']
+                if 'mac' in temp:
+                    ls.append(temp['mac'])
+            online = []
+            for mac in ls:
+                if mac in MAC_ADDRESSES.keys():
+                    online.append(MAC_ADDRESSES[mac])
+            return online
+
+        online = get_macs()
+        text = 'None' if len(online) == 0 else 'The following are at home:' + '\n'.join(online)
+
         if update.effective_user.id in TEST_USERS:
             self.bot.send_message(
                 chat_id=update.message.chat_id,
-                text="Testing at_home"
+                text=text
             )
 
     def run(self):

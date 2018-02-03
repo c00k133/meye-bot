@@ -59,9 +59,9 @@ if __name__ == "__main__":
     if 'name' in secrets:
         name = secrets['name']
 
-    for admin in secrets['auth_check']:
-       bot.LIST_OF_USERS.append(admin['id'])
     for user in secrets['auth_check']:
+        bot.LIST_OF_USERS.append(user['id'])
+        bot.MAC_ADDRESSES.append({user['mac']: user['username']})
         if user['admin']:
             bot.TEST_USERS.append(user['id'])
 
