@@ -5,7 +5,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 from functools import wraps
-import os, telegram, nmap
+import os, telegram, nmap, time
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
@@ -138,12 +138,13 @@ class Bot:
             return online
 
         if update.effective_user.id in TEST_USERS:
-            self.bot.send_message(
-                chat_id=update.message.chat_id,
-                text='Started scanning.'
-            )
+            start = time.time()
             now_online = get_macs()
-            text = 'None' if len(now_online) == 0 else 'The following are at home:' + '\n'.join(now_online)
+            end = time.time()
+            if len(now_online) == 0:
+                text = 'None ({}s)'.format(int(end - start))
+            else:
+                text = 'The following are at home ({}s):'.format(int(end - start)) + '\n'.join(now_online)
             self.bot.send_message(
                 chat_id=update.message.chat_id,
                 text=text
