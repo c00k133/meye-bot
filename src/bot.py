@@ -128,8 +128,9 @@ class Bot:
 #            for host
 #        if update.effective_user.id in TEST_USERS:
         self.bot.send_message(
-            chat_id=update.effective_user,
-            text="Testing at_home"
+            chat_id=update.message.chat_id,
+            text=str(LIST_OF_USERS) + '\n' + str(TEST_USERS)
+            #"Testing at_home"
         )
 
     def run(self):
