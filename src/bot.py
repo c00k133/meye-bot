@@ -82,21 +82,6 @@ class Bot:
             reply_markup=reply_markup
         )
 
-        """
-        row = True
-        camera_keyboard = [[]]
-        for cam in os.listdir(CAM_DIR):
-            if row:
-                camera_keyboard[-1].append(cam)
-            else: camera_keyboard.append([cam])
-        reply_markup = ReplyKeyboardMarkup(camera_keyboard)
-        bot.send_message(
-            chat_id=update.message.chat_id,
-            text="Cameras",
-            reply_markup=reply_markup
-        )
-        """
-
     @restrict
     def uptime(self, bot, update):
         with open('/proc/uptime', 'r') as f:
@@ -130,18 +115,6 @@ class Bot:
                         video=f,
                         caption=msg
                     )
-
-        """
-        thumbs      = [p for p in newest_file if '.thumb' in p]
-        photo       = sorted(list(thumbs))[-1]
-        with open(actual_path + '/' + photo, 'rb') as p:
-            for user in TEST_USERS:
-                self.bot.send_photo(
-                    chat_id=user,
-                    photo=p,
-                    caption=msg
-                )
-        """
 
     def run(self):
         self.updater.start_polling()
