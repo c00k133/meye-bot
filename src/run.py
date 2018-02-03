@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     for user in secrets['auth_check']:
         bot.LIST_OF_USERS.append(user['id'])
-        bot.MAC_ADDRESSES[user['mac']] = user['username']
+        bot.MAC_ADDRESSES.update({user['mac'] : user['username']})
         if user['admin']:
             bot.TEST_USERS.append(user['id'])
 
