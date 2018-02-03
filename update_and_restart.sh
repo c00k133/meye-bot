@@ -19,11 +19,12 @@ do_query() {
 
 # Create the query
 query=(
-    "cd ${tbot} && git pull && "       # Pull changes on RPi
+    "cd ${tbot} && git pull && "                     # Pull changes on RPi
     "cat src/pid-bot | sudo xargs kill || true && "  # Stop (kill) last bot instance
-    "cd src && sudo nohup ./run.py &!"      # Start a new bot instance
+    "cd src && sudo nohup ./run.py &!"               # Start a new bot instance
 )
 
 # Do the actual query
 do_query "${query[*]}" 
 
+echo "DONE"
