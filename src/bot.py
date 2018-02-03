@@ -131,6 +131,7 @@ class Bot:
                 temp = nm[host]['addresses']
                 if 'mac' in temp:
                     ls.append(temp['mac'])
+            return ls
             online = []
             for mac in ls:
                 if mac in MAC_ADDRESSES.keys():
