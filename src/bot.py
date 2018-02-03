@@ -11,11 +11,11 @@ CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
 TEST_USERS = []
 
-def restrict(func, list=LIST_OF_USERS):
+def restrict(func):
     @wraps(func)
     def wrapped(self, bot, update, *args, **kwargs):
         user_id = update.effective_user.id
-        if user_id not in list:
+        if user_id not in LIST_OF_USERS:
             print('Unathorized access denied for {}.'.format(user_id))
             return
         return func(self, bot, update, *args, **kwargs)
@@ -119,7 +119,7 @@ class Bot:
                         caption=msg
                     )
 
-    @restrict(list=TEST_USERS)
+    @restrict
     def at_home(self, bot, update):
         def get_macs():
             nm = nmap.PortScanner()
@@ -127,11 +127,11 @@ class Bot:
             host_list = nm.all_hosts()
 #            for host
             pass
-        self.bot.send_message(
-            chat_id=update.effective_user,
-            text="Testing at_home"
-        )
-        pass
+        if update.effective_user.id in TEST_USERS:
+            self.bot.send_message(
+                chat_id=update.effective_user,
+                text="Testing at_home"
+            )
 
     def run(self):
         self.updater.start_polling()
