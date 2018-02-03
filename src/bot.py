@@ -5,17 +5,17 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 from functools import wraps
-import os, telegram
+import os, telegram, nmap
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
 TEST_USERS = []
 
-def restrict(func):
+def restrict(func, list=LIST_OF_USERS):
     @wraps(func)
     def wrapped(self, bot, update, *args, **kwargs):
         user_id = update.effective_user.id
-        if user_id not in LIST_OF_USERS:
+        if user_id not in list:
             print('Unathorized access denied for {}.'.format(user_id))
             return
         return func(self, bot, update, *args, **kwargs)
@@ -44,6 +44,9 @@ class Bot:
 
         uptime_handler = CommandHandler('uptime', self.uptime)
         self.dispatcher.add_handler(uptime_handler)
+
+        at_home_handler = CommandHandler('at_home', self.at_home)
+        self.dispatcher.add_handler(at_home_handler)
 
         # End handlers
         ##########################################################
@@ -115,6 +118,20 @@ class Bot:
                         video=f,
                         caption=msg
                     )
+
+    @restrict(list=TEST_USERS)
+    def at_home(self, bot, update):
+        def get_macs():
+            nm = nmap.PortScanner()
+            nm.scan(hosts='192.168.1.0/24', arguments='-e wlan0 -sP')
+            host_list = nm.all_hosts()
+#            for host
+            pass
+        self.bot.send_message(
+            chat_id=update.effective_user,
+            text="Testing at_home"
+        )
+        pass
 
     def run(self):
         self.updater.start_polling()
