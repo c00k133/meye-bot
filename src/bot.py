@@ -142,7 +142,7 @@ class Bot:
             now_online = get_macs()
             end = time.time()
             if len(now_online) == 0:
-                text = 'None ({}s)'.format(int(end - start))
+                text = 'Found none ({}s)'.format(int(end - start))
             else:
                 text = 'The following are at home ({}s):'.format(int(end - start)) + '\n'.join(now_online)
             self.bot.send_message(
