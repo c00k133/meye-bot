@@ -146,9 +146,9 @@ class Bot:
             now_online = get_macs()
             end = time.time()
             if len(now_online) == 0:
-                text = 'Found none ({}s)'.format(int(end - start))
+                text = 'Found none ({:.3f}s)'.format(int(end - start))
             else:
-                text = "The following are at home ({}s):\n".format(int(end - start)) + "\n".join(now_online)
+                text = "The following are at home ({:.3f}s):\n".format(int(end - start)) + "\n".join(now_online)
             self.bot.send_message(
                 chat_id=update.message.chat_id,
                 text=text
