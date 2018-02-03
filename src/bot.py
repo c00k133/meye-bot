@@ -141,6 +141,7 @@ class Bot:
             start = time.time()
             now_online = get_macs()
             end = time.time()
+            text = 'Placeholder'  # Adding this as for some reason I'm getting sent None
             if len(now_online) == 0:
                 text = 'Found none ({}s)'.format(int(end - start))
             else:
