@@ -131,7 +131,6 @@ class Bot:
                 temp = nm[host]['addresses']
                 if 'mac' in temp:
                     ls.append(temp['mac'])
-            return ls
             online = []
             for mac in ls:
                 if mac in MAC_ADDRESSES.keys():
@@ -143,8 +142,8 @@ class Bot:
                 chat_id=update.message.chat_id,
                 text='Started scanning.'
             )
-            online = get_macs()
-            text = 'None' if len(online) == 0 else 'The following are at home:' + '\n'.join(online)
+            now_online = get_macs()
+            text = 'None' if len(now_online) == 0 else 'The following are at home:' + '\n'.join(now_online)
             self.bot.send_message(
                 chat_id=update.message.chat_id,
                 text=text
