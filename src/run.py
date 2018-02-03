@@ -58,8 +58,6 @@ if __name__ == "__main__":
     name = None
     if 'name' in secrets:
         name = secrets['name']
-    else:
-        print('Found no name')
 
     for user in secrets['auth_check']:
         bot.LIST_OF_USERS.append(user['id'])
