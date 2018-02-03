@@ -45,8 +45,8 @@ class Bot:
         uptime_handler = CommandHandler('uptime', self.uptime)
         self.dispatcher.add_handler(uptime_handler)
 
-        at_home_handler = CommandHandler('at_home', self.at_home)
-        self.dispatcher.add_handler(at_home_handler)
+        athome_handler = CommandHandler('athome', self.athome)
+        self.dispatcher.add_handler(athome_handler)
 
         # End handlers
         ##########################################################
@@ -120,7 +120,7 @@ class Bot:
                     )
 
     @restrict
-    def at_home(self, bot, update):
+    def athome(self, bot, update):
         def get_macs():
             nm = nmap.PortScanner()
             nm.scan(hosts='192.168.1.0/24', arguments='-e wlan0 -sP')
@@ -130,7 +130,8 @@ class Bot:
         if update.effective_user.id in TEST_USERS:
             self.bot.send_message(
                 chat_id=update.effective_user,
-                text="Testing at_home"
+                text=str(LIST_OF_USERS) + '\n' + str(TEST_USERS)
+                #"Testing at_home"
             )
 
     def run(self):
