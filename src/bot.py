@@ -129,21 +129,12 @@ class Bot:
             nm = nmap.PortScanner()
             nm.scan(hosts='192.168.1.0/24', arguments='-sP')
             host_list = nm.all_hosts()
-            ls = []
+            online = []
             for host in host_list:
                 temp = nm[host]['addresses']
                 if 'mac' in temp and temp['mac'] in MAC_ADDRESSES.keys():
-                    ls.append(MAC_ADDRESSES[mac])
-            return ls
-            """
-                if 'mac' in temp:
-                    ls.append(temp['mac'])
-            online = []
-            for mac in ls:
-                if mac in MAC_ADDRESSES.keys():
-                    online.append(MAC_ADDRESSES[mac])
+                    online.append(MAC_ADDRESSES[temp['mac']])
             return online
-            """
 
         if update.effective_user.id in TEST_USERS:
             self.bot.send_message(
