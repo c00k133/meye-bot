@@ -167,6 +167,11 @@ class Bot:
 
     def run(self):
         self.updater.start_polling()
+        for usr in TEST_USERS:
+            self.bot.send_message(
+                chat_id=usr,
+                text='Bot has started'
+            )
 
     def stop(self):
         print('Stopping the bot...')
