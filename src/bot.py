@@ -148,7 +148,7 @@ class Bot:
             if len(now_online) == 0:
                 text = 'Found none ({:.3f}s)'.format(end - start)
             else:
-                text = "The following are at home ({:.3f}s):\n".format(end - start) + "\n@".join(now_online)
+                text = "The following are at home ({:.3f}s):\n".format(end - start) + "\n".join(map(lambda usr: '@' + usr, now_online))
             self.bot.send_message(
                 chat_id=update.message.chat_id,
                 text=text
