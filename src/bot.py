@@ -127,7 +127,7 @@ class Bot:
     def athome(self, bot, update):
         def get_macs():
             nm = nmap.PortScanner()
-            nm.scan(hosts='192.168.1.0/24', arguments='-e wlan0 -sP')
+            nm.scan(hosts='192.168.1.0/24', arguments='-sP')
             host_list = nm.all_hosts()
             ls = []
             for host in host_list:
