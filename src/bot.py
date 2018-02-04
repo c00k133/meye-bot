@@ -136,22 +136,22 @@ class Bot:
                     online.append(MAC_ADDRESSES[temp['mac']])
             return online
 
-        if update.effective_user.id in TEST_USERS:
-            self.bot.send_message(
-                chat_id=update.message.chat_id,
-                text='Started scanning'
-            )
-            start = time.time()
-            now_online = get_macs()
-            end = time.time()
-            if len(now_online) == 0:
-                text = 'Found none ({:.3f}s)'.format(end - start)
-            else:
-                text = "The following are at home ({:.3f}s):\n".format(end - start) + "\n".join(map(lambda usr: '@' + usr, now_online))
-            self.bot.send_message(
-                chat_id=update.message.chat_id,
-                text=text
-            )
+        #if update.effective_user.id in TEST_USERS:
+        self.bot.send_message(
+            chat_id=update.message.chat_id,
+            text='Started scanning'
+        )
+        start = time.time()
+        now_online = get_macs()
+        end = time.time()
+        if len(now_online) == 0:
+            text = 'Found none ({:.3f}s)'.format(end - start)
+        else:
+            text = "The following are at home ({:.3f}s):\n".format(end - start) + "\n".join(map(lambda usr: '@' + usr, now_online))
+        self.bot.send_message(
+            chat_id=update.message.chat_id,
+            text=text
+        )
 
     @restrict
     def get_ip(self, bot, update):
