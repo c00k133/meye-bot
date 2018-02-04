@@ -5,7 +5,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 from functools import wraps
-import os, telegram, nmap, time
+import os, telegram, nmap, time, requests
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
@@ -48,6 +48,9 @@ class Bot:
 
         athome_handler = CommandHandler('athome', self.athome)
         self.dispatcher.add_handler(athome_handler)
+
+        get_ip_handler = CommandHandler('getip', self.get_ip)
+        self.dispatcher.add_handler(get_ip_handler)
 
         # End handlers
         ##########################################################
@@ -153,6 +156,14 @@ class Bot:
                 chat_id=update.message.chat_id,
                 text=text
             )
+
+    @restrict
+    def get_ip(self, bot, update):
+        r = requests.get(r'http://www.icanhazip.com')
+        self.bot.send_message(
+            chat_id=update.message.chat_id,
+            text='Your current IP: ' + r.text
+        )
 
     def run(self):
         self.updater.start_polling()
