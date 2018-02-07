@@ -3,6 +3,7 @@ token.json
 src/pid-bot
 src/nohup.out
 pi_ip
+*.swp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
