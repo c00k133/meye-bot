@@ -55,7 +55,7 @@ class Bot:
         # End handlers
         ##########################################################
 
-    def get_macs():
+    def get_macs(self):
         """ This is a private method, thus return [] if this does not work """
         try:
             function_call = inspect.stack()[1][4][0].strip()
