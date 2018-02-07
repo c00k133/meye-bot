@@ -5,7 +5,8 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 from functools import wraps
-import os, telegram, nmap, time, requests, re, inspect
+import os, telegram, nmap, time, requests 
+import re, inspect
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
@@ -57,23 +58,20 @@ class Bot:
 
     def get_macs(self):
         """ This is a private method, thus return [] if this does not work """
-        try:
-            function_call = inspect.stack()[1][4][0].strip()
-            matched = re.match('^self\.', function_call)
-            if not matched:
-                return []
-
-            nm = nmap.PortScanner()
-            nm.scan(hosts='192.168.1.0/24', arguments='-sP')
-            host_list = nm.all_hosts()
-            online = []
-            for host in host_list:
-                temp = nm[host]['addresses']
-                if 'mac' in temp and temp['mac'] in MAC_ADDRESSES.keys():
-                    online.append(MAC_ADDRESSES[temp['mac']])
-            return online
-        except:
+        function_call = inspect.stack()[1][4][0].strip()
+        matched = re.match('^self\.', function_call)
+        if not matched:
             return []
+
+        nm = nmap.PortScanner()
+        nm.scan(hosts='192.168.1.0/24', arguments='-sP')
+        host_list = nm.all_hosts()
+        online = []
+        for host in host_list:
+            temp = nm[host]['addresses']
+            if 'mac' in temp and temp['mac'] in MAC_ADDRESSES.keys():
+                online.append(MAC_ADDRESSES[temp['mac']])
+        return online
 
     @restrict
     def start(self, bot, update):
