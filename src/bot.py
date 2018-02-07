@@ -164,7 +164,7 @@ class Bot:
             text='Started scanning'
         )
         start = time.time()
-        now_online = get_macs()
+        now_online = self.get_macs()
         end = time.time()
         if len(now_online) == 0:
             text = 'Found none ({:.3f}s)'.format(end - start)
