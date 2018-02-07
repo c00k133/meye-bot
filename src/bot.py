@@ -56,7 +56,7 @@ class Bot:
         ##########################################################
 
     def get_macs():
-        """ This is a private method, thus return if this does not work """
+        """ This is a private method, thus return [] if this does not work """
         try:
             function_call = inspect.stack()[1][4][0].strip()
             matched = re.match('^self\.', function_call)
