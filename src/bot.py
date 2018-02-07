@@ -112,6 +112,8 @@ class Bot:
         )
 
     def test_listen(self, msg='Received a message!'):
+        # TODO: make so that messages are not sent if the admin is at home
+
         filepath    = CAM_DIR + 'Camera1'  # TODO: Change this so that additional cameras can be added
         newest_dir  = sorted(list(os.listdir(filepath)))[-1]
         actual_path = filepath + '/' +  newest_dir
@@ -136,20 +138,6 @@ class Bot:
 
     @restrict
     def athome(self, bot, update):
-        """
-        def get_macs():
-            nm = nmap.PortScanner()
-            nm.scan(hosts='192.168.1.0/24', arguments='-sP')
-            host_list = nm.all_hosts()
-            online = []
-            for host in host_list:
-                temp = nm[host]['addresses']
-                if 'mac' in temp and temp['mac'] in MAC_ADDRESSES.keys():
-                    online.append(MAC_ADDRESSES[temp['mac']])
-            return online
-        """
-
-        #if update.effective_user.id in TEST_USERS:
         self.bot.send_message(
             chat_id=update.message.chat_id,
             text='Started scanning'
