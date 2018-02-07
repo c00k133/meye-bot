@@ -7,7 +7,7 @@ from datetime import timedelta
 from functools import wraps
 import os, telegram, nmap, time, requests 
 
-CAM_DIR = '/var/lib/motioneye/'
+CAM_DIR = '/var/lib/motioneye/'  # Default set by MotionEye
 LIST_OF_USERS = []
 TEST_USERS = []
 MAC_ADDRESSES = {}
@@ -25,7 +25,7 @@ def restrict(func):
 class Bot:
 
     def __init__(self, token, name=None):
-        self.name  = name
+        self.name = name
 
         self.bot        = telegram.Bot(token)
         self.updater    = Updater(token=token)
