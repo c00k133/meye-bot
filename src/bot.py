@@ -5,7 +5,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 from functools import wraps
-import os, telegram, nmap, time, requests, re
+import os, telegram, nmap, time, requests, re, inspect
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
