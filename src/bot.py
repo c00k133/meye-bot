@@ -55,6 +55,26 @@ class Bot:
         # End handlers
         ##########################################################
 
+    def get_macs():
+        """ This is a private method, thus return if this does not work """
+        try:
+            function_call = inspect.stack()[1][4][0].strip()
+            matched = re.match('^self\.', function_call)
+            if not matched:
+                return []
+
+            nm = nmap.PortScanner()
+            nm.scan(hosts='192.168.1.0/24', arguments='-sP')
+            host_list = nm.all_hosts()
+            online = []
+            for host in host_list:
+                temp = nm[host]['addresses']
+                if 'mac' in temp and temp['mac'] in MAC_ADDRESSES.keys():
+                    online.append(MAC_ADDRESSES[temp['mac']])
+            return online
+        except:
+            return []
+
     @restrict
     def start(self, bot, update):
         bot.send_message(
@@ -125,6 +145,7 @@ class Bot:
 
     @restrict
     def athome(self, bot, update):
+        """
         def get_macs():
             nm = nmap.PortScanner()
             nm.scan(hosts='192.168.1.0/24', arguments='-sP')
@@ -135,6 +156,7 @@ class Bot:
                 if 'mac' in temp and temp['mac'] in MAC_ADDRESSES.keys():
                     online.append(MAC_ADDRESSES[temp['mac']])
             return online
+        """
 
         #if update.effective_user.id in TEST_USERS:
         self.bot.send_message(
