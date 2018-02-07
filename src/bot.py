@@ -6,7 +6,6 @@ from telegram.ext import Updater, CommandHandler
 from datetime import timedelta
 from functools import wraps
 import os, telegram, nmap, time, requests 
-import re, inspect
 
 CAM_DIR = '/var/lib/motioneye/'
 LIST_OF_USERS = []
@@ -56,13 +55,7 @@ class Bot:
         # End handlers
         ##########################################################
 
-    def get_macs(self):
-        """ This is a private method, thus return [] if this does not work """
-        function_call = inspect.stack()[1][4][0].strip()
-        matched = re.match('^self\.', function_call)
-        if not matched:
-            return []
-
+    def _get_macs(self):
         nm = nmap.PortScanner()
         nm.scan(hosts='192.168.1.0/24', arguments='-sP')
         host_list = nm.all_hosts()
@@ -162,7 +155,7 @@ class Bot:
             text='Started scanning'
         )
         start = time.time()
-        now_online = self.get_macs()
+        now_online = self._get_macs()
         end = time.time()
         if len(now_online) == 0:
             text = 'Found none ({:.3f}s)'.format(end - start)
