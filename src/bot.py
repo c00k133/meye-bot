@@ -1,4 +1,4 @@
-#!/urs/bin/env
+#!/usr/bin/env
 
 from telegram import ReplyKeyboardMarkup
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
